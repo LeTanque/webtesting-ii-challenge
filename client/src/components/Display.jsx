@@ -14,6 +14,13 @@ class Display extends Component {
                     <code>{this.props.balls}</code>
                     <code>{this.props.strikes}</code>
                 </section>
+                    <code>{this.props.walk ? 
+                        <>Walk!</> : <></>
+                    }</code>
+                    <code>{this.props.strikeout ? 
+                        <>Strikeout!</> : <></>
+                    }</code>
+                
                 
             </Fragment>
         );
