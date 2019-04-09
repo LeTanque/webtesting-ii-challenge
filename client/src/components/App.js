@@ -7,10 +7,16 @@ import Dashboard from './Dashboard'
 
 class App extends Component {
   state = {
+    atBat: 1,
     balls: 0,
     strikes: 0,
     strikeout: false,
-    walk: false
+    walk: false,
+    numStrikeouts: 0,
+    numWalks: 0,
+    inning: 1,
+    hits: 0,
+    foulBalls: 0,
   }
 
   hitBall = () => {
@@ -20,6 +26,7 @@ class App extends Component {
         balls: 0,
         strikeout: false,
         walk: true,
+        atBat: this.state.atBat + 1
       })
     }
     this.setState({
@@ -32,11 +39,26 @@ class App extends Component {
 
   hitStrike = () => {
     if (this.state.strikes === 2) {
+      if (this.state.numStrikeouts === 2) {
+        return this.setState({
+          ...this.state,
+          hits: 0,
+          foulBalls: 0,
+          strikes: 0,
+          strikeout: true,
+          walk: false,
+          atBat: 1,
+          numStrikeouts: 0,
+          inning: this.state.inning + 1
+        })  
+      }
       return this.setState({
         ...this.state,
         strikes: 0,
         strikeout: true,
-        walk: false
+        walk: false,
+        atBat: this.state.atBat + 1,
+        numStrikeouts: this.state.numStrikeouts + 1,
       })
     }
     this.setState({
@@ -47,7 +69,32 @@ class App extends Component {
     })
   }
 
-
+  hitFoul = () => {
+    if (this.state.balls === 3) {
+      return this.setState({
+        ...this.state,
+        balls: 0,
+        walk: true,
+        strikeout: false,
+        foulBalls: this.state.foulBalls + 1,
+      })
+    }
+    this.setState({
+      ...this.state,
+      foulBalls: this.state.foulBalls + 1,
+      balls: this.state.balls + 1,
+      strikeout: false,
+      walk: false,
+    })
+  }
+  hitHit = () => {
+    this.setState({
+      ...this.state,
+      hits: this.state.hits + 1,
+      strikeout: false,
+      walk: false,
+    })
+  }
 
   render() {
     return (
@@ -56,12 +103,22 @@ class App extends Component {
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <h3>Hello!</h3>
-            <Dashboard hitBall={this.hitBall} hitStrike={this.hitStrike} />
+            <Dashboard 
+              hitBall={this.hitBall} 
+              hitStrike={this.hitStrike} 
+              hitFoul={this.hitFoul}
+              hitHit={this.hitHit}
+            />
             <Display 
               balls={this.state.balls} 
               strikes={this.state.strikes} 
               walk={this.state.walk} 
               strikeout={this.state.strikeout} 
+              atBat={this.state.atBat}
+              inning={this.state.inning}
+              numStrikeouts={this.state.numStrikeouts}
+              hits={this.state.hits}
+              foulBalls={this.state.foulBalls}
             />
           </header>
         </div>
