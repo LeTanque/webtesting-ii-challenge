@@ -19,22 +19,46 @@ describe('<App />', () => {
     render(<App />);
   })
 
-  // it('renders Hello World', () => {
-  //   const { getByText, queryByText, debug } = render(<App />);
-    
+  // it('renders Hits!', () => {
+  //   const { queryByText, debug } = render(<App />);
   //   debug();
-    
-  //   // getByText('hello world');
-  //   // getByText(/hello world/i);// alternative way to find text with regex that is case-insensitive
-  //   expect(queryByText(/hello world/i)).not.toBeNull();
+  //   expect(queryByText(/Hits: /i)).not.toBeNull();
   // })
 
-  // it('greets the team', () => { 
-  //   const { getByText } = render(<App />);
-  //   const button = getByText(/greet/i);
+  it('Foul counter works', () => { 
+    const { getByText } = render(<App />);
+    const button = getByText(/foul/i);
 
-  //   fireEvent.click(button);
-  //   getByText(/hello web17/i);
-  // });
+    fireEvent.click(button);
+
+    getByText(/\d/i);
+  });
+
+  it('Hit counter works', () => { 
+    const { getByText } = render(<App />);
+    const button = getByText(/hit/i);
+
+    fireEvent.click(button);
+    
+    getByText(/\d/i);
+  });
+
+  it('Ball counter works', () => { 
+    const { getByText } = render(<App />);
+    const button = getByText(/ball/i);
+
+    fireEvent.click(button);
+    
+    getByText(/\d/i);
+  });
+
+  it('Strike counter works', () => { 
+    const { getByText } = render(<App />);
+    const button = getByText(/strike/i);
+
+    fireEvent.click(button);
+    
+    getByText(/\d/i);
+  });
 
 });

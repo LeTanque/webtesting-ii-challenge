@@ -45,6 +45,7 @@ class App extends Component {
           hits: 0,
           foulBalls: 0,
           strikes: 0,
+          balls: 0,
           strikeout: true,
           walk: false,
           atBat: 1,
@@ -70,27 +71,29 @@ class App extends Component {
   }
 
   hitFoul = () => {
-    if (this.state.balls === 3) {
+    if (this.state.strikes === 2) {
       return this.setState({
         ...this.state,
-        balls: 0,
-        walk: true,
+        walk: false,
         strikeout: false,
         foulBalls: this.state.foulBalls + 1,
+        strikes: 2
       })
     }
     this.setState({
       ...this.state,
       foulBalls: this.state.foulBalls + 1,
-      balls: this.state.balls + 1,
+      strikes: this.state.strikes + 1,
       strikeout: false,
       walk: false,
     })
   }
+
   hitHit = () => {
     this.setState({
       ...this.state,
       hits: this.state.hits + 1,
+      atBat: this.state.atBat + 1,
       strikeout: false,
       walk: false,
     })
@@ -102,7 +105,7 @@ class App extends Component {
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
-            <h3>Hello!</h3>
+            <h3>Play ball!</h3>
             <Dashboard 
               hitBall={this.hitBall} 
               hitStrike={this.hitStrike} 
